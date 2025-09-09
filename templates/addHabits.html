@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Add a Habit{% endblock %}
+{% block content %}
+<h1>Add a Habit</h1>
+<form action="/addHabits" method="POST">
+    <input class="form-control my-2" type="text" name="habit" placeholder="Insert a habit or activity you want to keep track of" autofocus autocomplete="off" required>
+
+    <div class="form-check form-check-inline me-10">
+        <input class="form-check-input" type="radio" id="inlineRadio1" value="30" name="duration" required>
+        <label class="form-check-label" for="inlineCheckbox1">30 Minutes</label>
+    </div>
+    <div class="form-check form-check-inline me-10"></div>
+        <input class="form-check-input" type="radio" id="inlineRadio2" value="60" name="duration">
+        <label class="form-check-label" for="inlineCheckbox1">60 Minutes</label>
+    </div>
+    <div class="form-check form-check-inline me-10"></div>
+        <input class="form-check-input" type="radio" id="inlineRadio3" value="90" name="duration">
+        <label class="form-check-label" for="inlineCheckbox1">90 Minutes</label>
+    </div>
+    <div class="form-check form-check-inline me-10"></div>
+        <input class="form-check-input" type="radio" id="inlineRadio4" value="120" name="duration">
+        <label class="form-check-label" for="inlineCheckbox1">120 Minutes</label>
+    </div>
+    <button class="btn btn-primary btn-block my-2" type="submit">Add Habit</button>
+    </form>
+{% endblock %}

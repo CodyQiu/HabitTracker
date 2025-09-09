@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Home Page</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{category}}" role="alert">
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% if current_user.is_authenticated %}
+    <p>Hi {{current_user.username}}! You are now logged in!</p>
+{% else %}
+    <p>You are not logged in.</p>
+{% endif %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary btn-block my-2" href="/addHabits">Add a Habit</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-block my-2" href="/start">Start a Habit</a>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

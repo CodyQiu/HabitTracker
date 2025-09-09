@@ -1,0 +1,23 @@
+General Notes:
+    Will basically make a study tracker that is pretty similar to TomaToDo
+
+    Basically, people will be able to add "Activities" that they can kinda keep track of 
+    the time they spend on throughout the time they're on the app.
+
+    Whenever an activity is selected, there will be options for how long they do the activity 
+    for: either 15, 30, 60, 90, 120, or custom. They will also be able to take a 1, 3, 5, or custom
+    break of their own choosing as well
+
+    The amount of time they spend on each activity will be saved to a database. Total times and 
+    averages will be displayed for each month. To encourage productivity, after each week, 
+    the app will track the average productivity compared to the previous week and either encourage
+    users to be more productive or congratulate them for increase producitivity.
+
+    While the user is studying, there will be a timer showing their progress. Also, there will be
+    a lot of motivational quotes sprinkled throughout the app.
+
+    If I have time, there should also be a Goals component, where users will be able to set either
+    daily or weekly goals for overall productivity or subject-specific productivity.
+
+
+    

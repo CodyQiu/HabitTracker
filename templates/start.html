@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %}Start your Habit{% endblock %}
+
+{% block content %}
+<h2>Start your Habit</h2>
+<p>Click any of the boxes below to start that habit! Happy Productivity!</p>
+<div class="row row-cols-2 row-cols-md-3 g-4">
+  {% for habit in habits %}
+    <div class="col">
+        <div class="card h-100" onclick="location.href='/start/{{ habit.id }}';" style="cursor: pointer;">
+            <div class="card-body">
+                <h5 class="card-title">{{ habit.habit }}</h5>
+                    <p class="card-text">Duration: {{ habit.duration }} minutes</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+{% endblock %}
