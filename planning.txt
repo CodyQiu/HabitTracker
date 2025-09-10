@@ -20,4 +20,6 @@ General Notes:
     daily or weekly goals for overall productivity or subject-specific productivity.
 
 
-    
+    9/9/25
+    Okay, so today i basically made and worked on start.html. I want to be able to hopefully get the start route finished,
+    which includes likes the timer and stuff. Or at least get close to it.

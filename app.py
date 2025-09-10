@@ -149,3 +149,13 @@ def start():
     db=get_db()
     rows = db.execute("SELECT * FROM habits").fetchall()
     return render_template("start.html", habits=rows)
+
+@app.route("/start/<int:habit_id>")
+@login_required
+def start_habit(habit_id):
+    db=get_db()
+    habit = db.execute("SELECT * FROM habits where id = ?", (habit_id,)).fetchone()
+    if habit is None:
+        flash("Habit not found!", "danger")
+        return redirect('/start')
+    return render_template("timer.html", habit=habit)
