@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}Timer{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h2>Timer for: {{ habit.habit }}</h2>
+    <p>Duration: {{habit.duration}} minutes</p>
+</div>
+<div id="timer" class="display-1 text-center my-5">{{habit.duration}}:00</div>
+<button id="startBtn" class="btn btn-success btn-lg mx-2" onclick="startTimer(parseInt('{{ habit.duration }}'))">Start</button>
+<script>
+    function startTimer(duration) {
+        var timer = duration * 60, minutes, seconds;
+        var display = document.getElementById('timer');
+        var startBtn = document.getElementById('startBtn');
+        startBtn.disabled = true; // Disable the start button after clicking
+        var countdown = setInterval(function() {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            display.textContent = minutes + ':' + seconds;
+            if (--timer < 0) {
+                clearInterval(countdown);
+                display.textContent = "Time's up!";
+                alert("Time's up! Great job on completing your habit!");
+                startBtn.disabled = false; // Re-enable the start button
+            }
+        }, 1000
+        );
+    }
+</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock %}

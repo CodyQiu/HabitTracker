@@ -4,6 +4,18 @@
 {% block content %}
 <h2>Start your Habit</h2>
 <p>Click any of the boxes below to start that habit! Happy Productivity!</p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{category}}" role="alert">
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+
 <div class="row row-cols-2 row-cols-md-3 g-4">
   {% for habit in habits %}
     <div class="col">
@@ -15,6 +27,5 @@
         </div>
     </div>
     {% endfor %}
-
 
 {% endblock %}
