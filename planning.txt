@@ -23,3 +23,10 @@ General Notes:
     9/9/25
     Okay, so today i basically made and worked on start.html. I want to be able to hopefully get the start route finished,
     which includes likes the timer and stuff. Or at least get close to it.
+
+    9/12/2025
+    So plan is to implement the pause/break system as well as to actually be able to record everything. Then, 
+    I'll basically have to figure out how to make it in a graph, and the MVP is basically done.
+    
+    Some further things I could consider is like fade in/out and overall aesthetics, being able to rename or adjust
+    the time for each activity, 
