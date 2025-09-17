@@ -30,3 +30,10 @@ General Notes:
     
     Some further things I could consider is like fade in/out and overall aesthetics, being able to rename or adjust
     the time for each activity, 
+
+    Implementation of recording:
+        Basically record however long has passed and throw that into a 'Records' table, inputting the start_time
+        and the end_time with the date/month/year, as well as the timePassed and the habit. Oh, also make sure to
+        add a user_id that goes along with it. 
+        Each time one studies will correspond to a new row in the table, so nothing is unique except for maybe an id. 
+        After that, try and learn some chart/graph stuff to be able to implement it into the /analytics route.
