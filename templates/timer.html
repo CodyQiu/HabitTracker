@@ -9,7 +9,7 @@
 <div id="timer" class="display-1 text-center my-5">{{habit.duration}}:00</div>
 <button id="startBtn" class="btn btn-success btn-lg mx-2" onclick="startTimer(parseInt('{{ habit.duration }}'))">Start</button>
 <button id="pauseBtn" class="btn btn-warning btn-lg mx-2" onclick="pauseTimer()">Pause</button>
-<button id="resumeBtn" class="btn btn-primary btn-lg mx-2" onclick="resumeTimer()">Resume</button>
+<button id="resumeBtn" class="btn btn-primary btn-lg mx-2" onclick="resumeTimer()" style="display: none;">Resume</button>
 <script>
     let timer;
     let countdown;
@@ -39,13 +39,20 @@
     }
     function pauseTimer() {
         const pauseBtn = document.getElementById('pauseBtn');
-        pauseBtn.disabled = true;
+        const resumeBtn = document.getElementById('resumeBtn');
+        pauseBtn.style.display = 'none';
+        resumeBtn.style.display = 'inline-block';
+        resumeBtn.disabled = false;
         clearInterval(countdown);
     }
     function resumeTimer() {
         const display = document.getElementById('timer');
         const resumeBtn = document.getElementById('resumeBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        resumeBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline-block';
         resumeBtn.disabled = true;
+        
 
         let minutes, seconds;
         countdown = setInterval(function() {
