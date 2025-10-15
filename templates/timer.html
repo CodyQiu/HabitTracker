@@ -10,12 +10,15 @@
 <button id="startBtn" class="btn btn-success btn-lg mx-2" onclick="startTimer(parseInt('{{ habit.duration }}'))">Start</button>
 <button id="pauseBtn" class="btn btn-warning btn-lg mx-2" onclick="pauseTimer()">Pause</button>
 <button id="resumeBtn" class="btn btn-primary btn-lg mx-2" onclick="resumeTimer()" style="display: none;">Resume</button>
+<button id="endBtn" class="btn btn-danger btn-lg mx-2" onclick="endHabit()">End Habit</button>
 <script>
     let timer;
     let countdown;
+    let startTime;
 
     function startTimer(duration) {
         timer = duration * 60;
+        startTime = Date.now();
         const display = document.getElementById('timer');
         const startBtn = document.getElementById('startBtn');
         startBtn.disabled = true; // Disable the start button after clicking
@@ -71,12 +74,32 @@
             }
         }, 1000);
     }
+
+function endHabit() {
+    const endBtn = document.getElementById("endBtn");
+    endBtn.disabled = true; // prevent double-clicks
+
+    clearInterval(countdown);
+    const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+
+    fetch(`/complete/{{ habit.id }}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ duration: elapsedSeconds / 60 }) // convert to minutes
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+        window.location.href = "/";
+    })
+    .catch(err => console.error("Error completing habit:", err));
+}
+
+
 </script>
-    
-
-
-
-
 
 
 {% endblock %}

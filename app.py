@@ -117,7 +117,7 @@ def register():
 
         return redirect('/login')
     else:
-        return render_template('login.html')
+        return render_template('register.html')
     
 
 @app.route("/analytics")
@@ -159,3 +159,22 @@ def start_habit(habit_id):
         flash("Habit not found!", "danger")
         return redirect('/start')
     return render_template("timer.html", habit=habit)
+
+
+
+from flask import request, jsonify
+
+@app.route("/complete/<int:habit_id>", methods=["POST"])
+def complete_habit(habit_id):
+    data = request.get_json()
+    duration = data.get("duration", 0)
+
+    db = get_db()
+    db.execute(
+        "INSERT INTO completions (user_id, habit_id, duration) VALUES (?, ?, ?)",
+        (current_user.id, habit_id, duration)
+    )
+    db.commit()
+
+    return jsonify({"message": "Task successfully completed!"})
+
