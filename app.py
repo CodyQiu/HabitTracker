@@ -119,11 +119,6 @@ def register():
     else:
         return render_template('register.html')
     
-
-@app.route("/analytics")
-@login_required
-def analytics():
-    return render_template("analytics.html")
     
 @app.route("/addHabits", methods = ['GET', 'POST'])
 @login_required
@@ -178,3 +173,17 @@ def complete_habit(habit_id):
 
     return jsonify({"message": "Task successfully completed!"})
 
+@app.route("/analytics")
+@login_required
+def analytics():
+    db = get_db()
+    completions = db.execute(
+        "SELECT habits.habit, SUM(completions.duration) as total_duration "
+        "FROM completions "
+        "JOIN habits ON completions.habit_id = habits.id "
+        "WHERE completions.user_id = ? "
+        "GROUP BY habits.habit",
+        (current_user.id,)
+    )
+    rows = completions.fetchall()
+    return render_template("analytics.html", completions=rows)

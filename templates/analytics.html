@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block title %}Analytics{% endblock %} {% block
+content %}
+
+<style>
+  .padded-table td,
+  .padded-table th {
+    padding: 10px; /* Adds 10px of space inside all sides of each cell */
+    border: 1px solid black; /* Optional: adds a border to visualize the space */
+  }
+
+  .padded-table {
+    border-collapse: collapse; /* Optional: makes borders single lines */
+  }
+</style>
+
+<h1>Analytics</h1>
+<table class="padded-table">
+  <thead>
+    <tr>
+      <th>Habit</th>
+      <th>Total Duration (Minutes)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for completion in completions %}
+    <tr>
+      <td>{{ completion.habit }}</td>
+      <td>{{ completion.total_duration | round(2) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
