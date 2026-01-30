@@ -1,3 +1,4 @@
+import os
 from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
@@ -9,7 +10,18 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-app.secret_key = "supersecretkey"  # Replace with a secure key in production, ensures that sessions are secure and tamper-proof
+
+# Use environment variables for secrets and cookie security in production.
+def _env_flag(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+app.secret_key = os.environ.get("SECRET_KEY", "dev-not-secure")
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = os.environ.get("SESSION_COOKIE_SAMESITE", "Lax")
+app.config["SESSION_COOKIE_SECURE"] = _env_flag("SESSION_COOKIE_SECURE", default=False)
 
 
 # Configure login manager
