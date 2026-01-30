@@ -80,5 +80,7 @@ Start command:
 ```
 gunicorn app:app --bind 0.0.0.0:$PORT
 ```
+
+Notes:
 - SQLite is file-based; for multiple workers or scaling, consider Postgres.
 - `SESSION_TYPE=filesystem` stores sessions on disk; add a persistent disk or switch to another backend for production.
