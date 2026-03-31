@@ -2,104 +2,117 @@
 {% block title %}Timer{% endblock %}
 
 {% block content %}
-<div class="container text-center">
-    <h2>Timer for: {{ habit.habit }}</h2>
-    <p>Duration: {{habit.duration}} minutes</p>
+<div class="text-center">
+  <h1 class="section-title">Timer for: {{ habit.habit }}</h1>
+  <p class="timer-meta">Duration: {{ habit.duration }} minutes</p>
 </div>
-<div id="timer" class="display-1 text-center my-5">{{habit.duration}}:00</div>
-<button id="startBtn" class="btn btn-success btn-lg mx-2" onclick="startTimer(parseInt('{{ habit.duration }}'))">Start</button>
-<button id="pauseBtn" class="btn btn-warning btn-lg mx-2" onclick="pauseTimer()">Pause</button>
-<button id="resumeBtn" class="btn btn-primary btn-lg mx-2" onclick="resumeTimer()" style="display: none;">Resume</button>
-<button id="endBtn" class="btn btn-danger btn-lg mx-2" onclick="endHabit()">End Habit</button>
+
+<div class="timer-panel text-center mt-4">
+  <div id="timer" class="timer-display">{{ habit.duration }}:00</div>
+  <div class="timer-actions">
+    <button id="startBtn" class="btn app-btn app-btn-primary" onclick="startTimer(parseInt('{{ habit.duration }}'))">
+      Start
+    </button>
+    <button id="pauseBtn" class="btn app-btn app-btn-soft-warning" onclick="pauseTimer()">Pause</button>
+    <button
+      id="resumeBtn"
+      class="btn app-btn app-btn-secondary"
+      onclick="resumeTimer()"
+      style="display: none;"
+    >
+      Resume
+    </button>
+    <button id="endBtn" class="btn app-btn app-btn-soft-danger" onclick="endHabit()">End Habit</button>
+  </div>
+</div>
+
 <script>
-    let timer;
-    let countdown;
-    let startTime;
+  let timer;
+  let countdown;
+  let startTime;
 
-    function startTimer(duration) {
-        timer = duration * 60;
-        startTime = Date.now();
-        const display = document.getElementById('timer');
-        const startBtn = document.getElementById('startBtn');
-        startBtn.disabled = true; // Disable the start button after clicking
+  function startTimer(duration) {
+    timer = duration * 60;
+    startTime = Date.now();
+    const display = document.getElementById("timer");
+    const startBtn = document.getElementById("startBtn");
+    startBtn.disabled = true;
 
-        let minutes, seconds;
-        countdown = setInterval(function() {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+    let minutes;
+    let seconds;
+    countdown = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
 
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            display.textContent = minutes + ':' + seconds;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.textContent = minutes + ":" + seconds;
 
-            if (--timer < 0) {
-                clearInterval(countdown);
-                display.textContent = "Time's up!";
-                alert("Time's up! Great job on completing your habit!");
-            }
-        }, 1000
-        );
-    }
-    function pauseTimer() {
-        const pauseBtn = document.getElementById('pauseBtn');
-        const resumeBtn = document.getElementById('resumeBtn');
-        pauseBtn.style.display = 'none';
-        resumeBtn.style.display = 'inline-block';
-        resumeBtn.disabled = false;
+      if (--timer < 0) {
         clearInterval(countdown);
-    }
-    function resumeTimer() {
-        const display = document.getElementById('timer');
-        const resumeBtn = document.getElementById('resumeBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        resumeBtn.style.display = 'none';
-        pauseBtn.style.display = 'inline-block';
-        resumeBtn.disabled = true;
-        
+        display.textContent = "Time's up!";
+        alert("Time's up! Great job on completing your habit!");
+      }
+    }, 1000);
+  }
 
-        let minutes, seconds;
-        countdown = setInterval(function() {
-            timer--;
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+  function pauseTimer() {
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resumeBtn = document.getElementById("resumeBtn");
+    pauseBtn.style.display = "none";
+    resumeBtn.style.display = "inline-block";
+    resumeBtn.disabled = false;
+    clearInterval(countdown);
+  }
 
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            display.textContent = minutes + ':' + seconds;
+  function resumeTimer() {
+    const display = document.getElementById("timer");
+    const resumeBtn = document.getElementById("resumeBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    resumeBtn.style.display = "none";
+    pauseBtn.style.display = "inline-block";
+    resumeBtn.disabled = true;
 
-            if (timer < 0) {
-                clearInterval(countdown);
-                display.textContent = "Time's up!";
-                alert("Time's up! Great job on completing your habit!");
-            }
-        }, 1000);
-    }
+    let minutes;
+    let seconds;
+    countdown = setInterval(function () {
+      timer--;
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
 
-function endHabit() {
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.textContent = minutes + ":" + seconds;
+
+      if (timer < 0) {
+        clearInterval(countdown);
+        display.textContent = "Time's up!";
+        alert("Time's up! Great job on completing your habit!");
+      }
+    }, 1000);
+  }
+
+  function endHabit() {
     const endBtn = document.getElementById("endBtn");
-    endBtn.disabled = true; // prevent double-clicks
+    endBtn.disabled = true;
 
     clearInterval(countdown);
     const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
 
     fetch(`/complete/{{ habit.id }}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ duration: elapsedSeconds / 60 }) // convert to minutes
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ duration: elapsedSeconds / 60 })
     })
-    .then(response => {
+      .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
-    })
-    .then(data => {
+      })
+      .then((data) => {
         alert(data.message);
         window.location.href = "/";
-    })
-    .catch(err => console.error("Error completing habit:", err));
-}
-
-
+      })
+      .catch((err) => console.error("Error completing habit:", err));
+  }
 </script>
-
-
 {% endblock %}

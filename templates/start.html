@@ -1,31 +1,28 @@
 {% extends "layout.html" %}
-{% block title %}Start your Habit{% endblock %}
+{% block title %}Start Your Habit{% endblock %}
 
 {% block content %}
-<h2>Start your Habit</h2>
-<p>Click any of the boxes below to start that habit! Happy Productivity!</p>
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{category}}" role="alert">
-                <p>{{ message }}</p>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+<div class="text-center">
+  <h1 class="section-title">Start your Habit</h1>
+  <p class="section-copy">Click any of the boxes below to start that habit! Happy Productivity!</p>
+</div>
 
-
-
-<div class="row row-cols-2 row-cols-md-3 g-4">
+{% if habits %}
+<div class="row habit-grid">
   {% for habit in habits %}
-    <div class="col">
-        <div class="card h-100" onclick="location.href='/start/{{ habit.id }}';" style="cursor: pointer;">
-            <div class="card-body">
-                <h5 class="card-title">{{ habit.habit }}</h5>
-                    <p class="card-text">Duration: {{ habit.duration }} minutes</p>
-            </div>
-        </div>
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="habit-card" onclick="location.href='/start/{{ habit.id }}';" role="button" tabindex="0">
+      <div class="feature-kicker">Habit</div>
+      <h3>{{ habit.habit }}</h3>
+      <p class="muted-copy mb-0">Focused session: {{ habit.duration }} minutes</p>
     </div>
-    {% endfor %}
-
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state text-center">
+  <p class="mb-3">You do not have any habits yet.</p>
+  <a class="btn app-btn app-btn-primary" href="/addHabits">Create Your First Habit</a>
+</div>
+{% endif %}
 {% endblock %}

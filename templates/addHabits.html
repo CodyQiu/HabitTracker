@@ -1,26 +1,46 @@
 {% extends "layout.html" %}
 {% block title %}Add a Habit{% endblock %}
-{% block content %}
-<h1>Add a Habit</h1>
-<form action="/addHabits" method="POST">
-    <input class="form-control my-2" type="text" name="habit" placeholder="Insert a habit or activity you want to keep track of" autofocus autocomplete="off" required>
 
-    <div class="form-check form-check-inline me-10">
-        <input class="form-check-input" type="radio" id="inlineRadio1" value="30" name="duration" required>
-        <label class="form-check-label" for="inlineCheckbox1">30 Minutes</label>
+{% block content %}
+<div class="compact-panel page-panel p-0 bg-transparent border-0 shadow-none">
+  <h1 class="section-title">Add a Habit</h1>
+
+  <form class="form-shell" action="/addHabits" method="POST">
+    <div class="form-group mb-4">
+      <label class="form-label" for="habit">Habit name</label>
+      <input
+        class="form-control"
+        id="habit"
+        type="text"
+        name="habit"
+        placeholder="Insert a habit or activity you want to keep track of"
+        autofocus
+        autocomplete="off"
+        required
+      />
     </div>
-    <div class="form-check form-check-inline me-10"></div>
-        <input class="form-check-input" type="radio" id="inlineRadio2" value="60" name="duration">
-        <label class="form-check-label" for="inlineCheckbox1">60 Minutes</label>
+
+    <p class="form-label mb-2">Duration</p>
+    <div class="duration-grid">
+      <div class="duration-option">
+        <input class="form-check-input" type="radio" id="duration30" value="30" name="duration" required />
+        <label for="duration30">30 min</label>
+      </div>
+      <div class="duration-option">
+        <input class="form-check-input" type="radio" id="duration60" value="60" name="duration" />
+        <label for="duration60">60 min</label>
+      </div>
+      <div class="duration-option">
+        <input class="form-check-input" type="radio" id="duration90" value="90" name="duration" />
+        <label for="duration90">90 min</label>
+      </div>
+      <div class="duration-option">
+        <input class="form-check-input" type="radio" id="duration120" value="120" name="duration" />
+        <label for="duration120">120 min</label>
+      </div>
     </div>
-    <div class="form-check form-check-inline me-10"></div>
-        <input class="form-check-input" type="radio" id="inlineRadio3" value="90" name="duration">
-        <label class="form-check-label" for="inlineCheckbox1">90 Minutes</label>
-    </div>
-    <div class="form-check form-check-inline me-10"></div>
-        <input class="form-check-input" type="radio" id="inlineRadio4" value="120" name="duration">
-        <label class="form-check-label" for="inlineCheckbox1">120 Minutes</label>
-    </div>
-    <button class="btn btn-primary btn-block my-2" type="submit">Add Habit</button>
-    </form>
+
+    <button class="btn app-btn app-btn-primary btn-block" type="submit">Save Habit</button>
+  </form>
+</div>
 {% endblock %}

@@ -2,37 +2,18 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Home Page</h1>
+<div class="text-center">
+  <h1 class="section-title">Welcome to the Home Page</h1>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{category}}" role="alert">
-                <p>{{ message }}</p>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+  {% if current_user.is_authenticated %}
+  <p class="welcome-line">Hi {{ current_user.username }}! You are now logged in!</p>
+  {% else %}
+  <p class="welcome-line">You are not logged in.</p>
+  {% endif %}
 
-{% if current_user.is_authenticated %}
-    <p>Hi {{current_user.username}}! You are now logged in!</p>
-{% else %}
-    <p>You are not logged in.</p>
-{% endif %}
-
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <a class="btn btn-primary btn-block my-2" href="/addHabits">Add a Habit</a>
-        </div>
-        <div class="col">
-            <a class="btn btn-success btn-block my-2" href="/start">Start a Habit</a>
-        </div>
-    </div>
-
-
-
-
-
+  <div class="hero-actions">
+    <a class="btn app-btn app-btn-primary" href="/addHabits">Add a Habit</a>
+    <a class="btn app-btn app-btn-secondary" href="/start">Start a Session</a>
+  </div>
+</div>
 {% endblock %}

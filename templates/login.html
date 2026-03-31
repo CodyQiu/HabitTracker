@@ -1,23 +1,20 @@
 {% extends "layout.html" %}
-{% block title %}Register{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
-<h1>Login</h1>
-<form action="/login" method="POST">
+<div class="compact-panel page-panel p-0 bg-transparent border-0 shadow-none">
+  <h1 class="section-title">Login</h1>
 
-    <input class="form-control my-2" type="text" name="username" placeholder="Username" autofocus autocomplete="off" required>
-    <input class="form-control my-2" type="password" name="password" placeholder="Password" autocomplete="off" required>
-    <button class="btn btn-primary btn-block my-2" type="submit">Login</button>
-
-</form> 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{category}}" role="alert">
-                <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
-
+  <form class="form-shell" action="/login" method="POST">
+    <div class="form-group mb-3">
+      <label class="form-label" for="username">Username</label>
+      <input class="form-control" id="username" type="text" name="username" autocomplete="off" autofocus required />
+    </div>
+    <div class="form-group mb-4">
+      <label class="form-label" for="password">Password</label>
+      <input class="form-control" id="password" type="password" name="password" autocomplete="off" required />
+    </div>
+    <button class="btn app-btn app-btn-primary btn-block" type="submit">Login</button>
+  </form>
+</div>
 {% endblock %}

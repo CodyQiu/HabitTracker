@@ -1,34 +1,35 @@
-{% extends "layout.html" %} {% block title %}Analytics{% endblock %} {% block
-content %}
+{% extends "layout.html" %}
+{% block title %}Analytics{% endblock %}
 
-<style>
-  .padded-table td,
-  .padded-table th {
-    padding: 10px; /* Adds 10px of space inside all sides of each cell */
-    border: 1px solid black; /* Optional: adds a border to visualize the space */
-  }
+{% block content %}
+<div class="text-center">
+  <h1 class="section-title">Analytics</h1>
+</div>
 
-  .padded-table {
-    border-collapse: collapse; /* Optional: makes borders single lines */
-  }
-</style>
-
-<h1>Analytics</h1>
-<table class="padded-table">
-  <thead>
-    <tr>
-      <th>Habit</th>
-      <th>Total Duration (Minutes)</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for completion in completions %}
-    <tr>
-      <td>{{ completion.habit }}</td>
-      <td>{{ completion.total_duration | round(2) }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+{% if completions %}
+<div class="table-panel">
+  <div class="table-responsive">
+    <table class="table app-table">
+      <thead>
+        <tr>
+          <th>Habit</th>
+          <th>Total Duration (Minutes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for completion in completions %}
+        <tr>
+          <td>{{ completion.habit }}</td>
+          <td>{{ completion.total_duration | round(2) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="empty-state text-center">
+  <p class="mb-0">No completed sessions yet. Finish a habit timer and your totals will show up here.</p>
+</div>
+{% endif %}
 {% endblock %}
